@@ -1,0 +1,24 @@
+parameters (calibrated): D=0.0001045436, U=2.1403266, S=0.0071746884, C1=-0.0085551453, C2=0.0082745301, B0=0.016318728, B1=0.00017101562, N=1.0651514, F0n=0.65005435, Mu=0.29706466
+F_min=421.68, F_max=574.95 W m-2; d18O percentiles (full stack) = 2.8014, 4.9100
+F0 = 0.6501 (normalised) = 521.31 W m-2 ; c = C2 for 14.4% of the last 1 Myr
+insolation range over the last 1 Myr: 432.7 - 561.7 W m-2
+
+Trigger insolation, c = C1, u = 1 (Eq. 11):
+  x-xH   F_trig    W m-2  B1 g^-N/B0
+  0.20    0.453    491.1       0.058
+  0.25    0.583    511.0       0.046
+  0.30    0.727    533.1       0.038
+  0.35    0.888    557.9       0.032
+F_trig(c=C1) < F0 for x - xH < 0.274  (i.e. x < 0.574)
+B1/S = 0.0238
+D needed to hold x = 1 for F just below F0 (c = C1): D > 0.0210   (calibrated D = 0.000105)
+u after a retreat of 1e-3: 1.316 ; after 0.05: 2.408 ; after 0.3: 4.467
+2-Ma ramp: U0 = 0.6115, W = 0.001274 kyr-1, Q = -0.000200 kyr-1, xH(-2 Ma) = 0.54
+transport factor (x-xH)^-N at x = 1: 1.462 (xH = 0.30) vs 2.287 (xH = 0.54)
+
+Reversals (glaciation -> retreat) over -1000..0 kyr at dt = 0.01: 22
+  committed terminations (amplitude >= 0.2): 15
+    starting with F < F0 (c = C1, transport alone): 9
+    starting with F >= F0 (albedo switch active)  : 6
+  minor reversals (amplitude < 0.2): 7
+  very short retreats (< 0.5 kyr, possible numerical chattering): 0
