@@ -1,14 +1,15 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it together with the associated paper."
-title: "Code for: Geometry-controlled meridional transport explains threshold deglaciations: a 1-ODE conceptual model of glacial-interglacial cycles"
+message: "If you use this software, please cite it as below."
+title: "1-ODE conceptual model of glacial-interglacial cycles driven by 65N insolation"
 authors:
-  - family-names: Maiero
-    given-names: Enrico
-  - family-names: Giorgi
-    given-names: Filippo
-  - family-names: Solidoro
-    given-names: Cosimo
-license: MIT
-# version: 1.0.0
-# doi: 10.5281/zenodo.XXXXXXX
-# date-released: 2026-MM-DD
+  - family-names: "Maiero"
+    given-names: "F."
+  - family-names: "Giorgi"
+    given-names: "F."
+  - family-names: "Solidoro"
+    given-names: "C."
+version: "1.0.0"
+doi: "10.5281/zenodo.24148013"
+date-released: "2026-11-12"
+license: "MIT"
+repository-code: "https://github.com/TUO_USERNAME/v40-1ode-model"
