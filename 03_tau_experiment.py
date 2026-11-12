@@ -105,47 +105,59 @@ def main():
         np.save(f"{args.outdir}/tau_{param_tag}_mis11_{args.mis11}.npy", best)
         res[spec] = (base, best)
 
-    # ── Generation of Figure ──────────────────────────────────────────────────
+    # ── Generation of Figure (stato stilistico di riferimento) ─────────────────
     tg = win.tg
-    fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(15, 10), sharex=True, gridspec_kw={"height_ratios": [0.6, 0.9]})
-    
-    title_mode = "best-fit tau (fixed physical params)" if args.fixed_params else "calibrated tau (joint Nelder-Mead)"
-    fig.suptitle(f"Insolation inertia tau: solid = {title_mode}, dashed = tau = 0", fontsize=10)
+    fig, axes = plt.subplots(2, 1, figsize=(15, 10), sharex=True,
+                             gridspec_kw={"height_ratios": [0.6, 0.9]})
+    ax0, ax1 = axes
 
-    ax0.plot(tg, np.interp(tg, inp.t_ins, inp.F_raw), color="goldenrod", lw=0.8, label="F (raw)")
+    # Insolation panel
+    ax0.plot(tg, np.interp(tg, inp.t_ins, inp.F_raw), color="goldenrod", lw=0.8, label="Raw Insolation F(t)")
     for spec, (p0, p1) in res.items():
         m = int(round(V.GRID_DT / V.DT_CAL))
         nf = (len(tg) - 1) * m + 1
         Fs = inp.F_to_W(V.fine_forcing(inp, win.t_start, V.DT_CAL, nf, p1[10]))[::m]
-        ax0.plot(tg, Fs, color=COL.get(spec, "k"), lw=1.0, alpha=0.7, label=f"Fs, tau = {p1[10]:.2f} kyr ({spec})")
-    ax0.axvspan(*V.MIS6, color="orange", alpha=0.12, label="MIS 6")
-    ax0.set_ylabel("W m$^{-2}$")
-    ax0.set_title("Insolation F(t) and filtered Fs(t)", fontsize=9)
+        lab_sm = f"{LABEL.get(spec, spec)}, smoothed insolation"
+        ax0.plot(tg, Fs, color=COL.get(spec, "k"), lw=1.0, alpha=0.7,
+                 label=f"Fs  τ={p1[10]:.2f} kyr ({lab_sm})")
+    ax0.axvspan(*V.MIS6, color="orange", alpha=0.12, label="MIS6")
+    ax0.set_ylabel("W m⁻²", fontsize=9)
+    ax0.set_title("Insolation F(t) and smoothed Fs(t)", fontsize=9)
     ax0.legend(fontsize=8, loc="upper right")
-    ax0.grid(alpha=0.25)
+    ax0.grid(True, alpha=0.25)
 
-    ax1.plot(tg, win.xo, "k-", lw=1.8, alpha=0.6, label=r"Normalised $\delta^{18}$O", zorder=10)
+    # Ice margin panel
+    ax1.plot(tg, win.xo, "k-", lw=1.8, alpha=0.6, label="Normalized δ¹⁸O", zorder=10)
     for spec, (p0, p1) in res.items():
-        for p, ls, lw, lab in ((p0, "--", 1.1, f"{LABEL.get(spec, spec)} (tau = 0)"),
-                               (p1, "-", 1.5, f"{LABEL.get(spec, spec)}, filtered insolation (tau = {p1[10]:.2f} kyr)")):
-            e = V.evaluate(V.simulate(p, inp, win), win)
-            ax1.plot(tg, V.simulate(p, inp, win), color=COL.get(spec, "k"), ls=ls, lw=lw,
-                     alpha=0.85, label=f"{lab}  RMS(MIS 6) = {e['rms_mis6']:.3f}")
+        col = COL.get(spec, "k")
+        base_lab = LABEL.get(spec, spec)
+        variants = [
+            (p0, f"{base_lab} (τ=0)", dict(color=col, lw=1.1, ls="--", alpha=0.80)),
+            (p1, f"{base_lab}, smoothed insolation", dict(color=col, lw=1.5, ls="-", alpha=1.00)),
+        ]
+        for p, lab, sty in variants:
+            xs = V.simulate(p, inp, win)
+            m = V.evaluate(xs, win)
+            ax1.plot(tg, xs,
+                     label=f"{lab}  obj={m['J']:.4f}  r={m['r']:.3f}  RMS6={m['rms_mis6']:.4f}",
+                     **sty)
+
     ax1.axvspan(*V.MIS6, color="orange", alpha=0.10)
     ax1.axvspan(*V.MIS11, color="lightblue", alpha=0.10)
     ax1.invert_yaxis()
-    ax1.set_xlabel("Time (kyr)")
-    ax1.set_ylabel("Ice margin x (normalised latitude, reversed)")
-    ax1.set_title("Ice margin", fontsize=9)
+    ax1.set_ylabel("Ice margin x (normalized latitude, reversed)", fontsize=9)
+    ax1.set_xlabel("Time (kyr BP)", fontsize=9)
     ax1.legend(fontsize=7, loc="upper left", ncol=2)
-    ax1.grid(alpha=0.25)
+    ax1.set_title("Ice margin", fontsize=9)
+    ax1.grid(True, alpha=0.25)
+
     ax0.margins(x=0)
     ax1.margins(x=0)
-    fig.tight_layout()
 
+    plt.tight_layout()
     out = f"{args.figdir}/tau_calibration.png"
-    fig.savefig(out, dpi=150, bbox_inches="tight")
-    plt.close(fig)
+    plt.savefig(out, dpi=150, bbox_inches="tight")
+    plt.close()
     print("saved", out)
 
 

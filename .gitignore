@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.nbc
+*.nbi
+figures/*
+!figures/.gitkeep
+results/*
+!results/.gitkeep
+olds

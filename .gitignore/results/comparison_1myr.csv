@@ -1,4 +1,0 @@
-model,J,rms_all,r,rms_calib,rms_upper,rms_lower,rms_mis6,rms_mis11
-This model (calibrated),0.28865,0.07331,0.75843,0.06672,0.03852,0.03546,0.14164,0.06308
-Paillard (published),0.53667,0.09189,0.80392,0.08563,0.09016,0.06019,0.17373,0.05219
-Paillard (recalibrated),0.31388,0.07467,0.76847,0.07495,0.04525,0.03439,0.09229,0.04484

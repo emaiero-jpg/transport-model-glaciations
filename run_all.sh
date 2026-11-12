@@ -10,10 +10,10 @@ python 01_calibrate.py --top-k 10 "$@"
 python 02_convergence_dt.py "$@"
 
 # 3. Insolation-inertia experiment using 'calibrated' and 'mis6-adaptable' parameter sets
-python 03_tau_experiment.py --params calibrated mis6-adaptable "$@"
+python 03_tau_experiment.py --params calibrated mis6-adaptable --fixed-params "$@"
 
 # 4. Local robustness analysis (Figure 5) on the calibrated solution (standard D >= 0 mode)
-python 04_hessian_ensemble.py --params calibrated "$@"
+python 04_hessian_ensemble.py --params calibrated --enforce-d-positive "$@"
 
 # 5. Paillard (1998) re-calibrated with the same objective
 python 05_paillard_calibration.py "$@"
