@@ -109,7 +109,7 @@ TAU_BOUNDS = (0.0, 10.0)             # kyr
 
 # Paillard (1998) published parameters: [tau_i, tau_g, tau_G, v_r, tau_F]
 PAILLARD_M2_ORIG = np.array([10.0, 50.0, 50.0, 1.0, 25.0])
-PAILLARD_M3_ORIG = np.array([5.0, 75.0, 75.0, 1.0, 28.0])   # values used in the paper's comparison;
+PAILLARD_M3_ORIG = np.array([5.0, 80.0, 80.0, 1.0, 28.0])   # values used in the paper's comparison;
 PAILLARD_M3_VMAX_END = 1.1                                  # verify against Paillard (1998), Fig. 4
 PAILLARD_VMAX_START = 0.35
 PAILLARD_TREND_TOTAL = 6.0     # W m-2, total insolation trend over the ramp (3 W m-2 Myr-1 over 2 Myr)
